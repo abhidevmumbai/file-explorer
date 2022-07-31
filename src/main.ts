@@ -5,22 +5,18 @@ import { ITreeNode, selectors } from "./types";
 class App {
   nodeList: ITreeNode[] = [];
   appEl: HTMLElement | null;
-  appLeftEl: HTMLElement | null;
   appRightEl: HTMLElement | null;
   treeNode: any;
 
   constructor() {
     this.appEl = document.getElementById(selectors.App);
     this.setupLayout();
-    this.appLeftEl = this.appEl!.querySelector(selectors.AppLeft);
     this.appRightEl = document.getElementById(selectors.AppRight);
   }
 
   async init() {
     console.log("App init...");
     await this.fetchData();
-    this.treeNode = new TreeNode();
-    this.treeNode.init(this.nodeList);
   }
 
   async fetchData() {
@@ -28,7 +24,9 @@ class App {
       .then((res) => res.json())
       .then((res) => {
         this.nodeList = res.data;
-        console.log(this.nodeList);
+
+        this.treeNode = new TreeNode(this.nodeList);
+        this.treeNode.init();
       });
   }
 
