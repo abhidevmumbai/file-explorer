@@ -1,9 +1,11 @@
 import { ITreeNode, selectors } from "../types";
+import "./style.css";
+import { getNodeIcon } from "../utils";
 
 export class TreeNode {
   nodeList: ITreeNode[] = [];
   appLeftEl: HTMLElement | null;
-  fileTreeEl: HTMLElement | null;
+  showFiles = false; // Flag to display files in the file tree
 
   constructor(nodeList: ITreeNode[]) {
     this.nodeList = nodeList;
@@ -13,61 +15,54 @@ export class TreeNode {
   init() {
     console.log("TreeNode init...");
     this.renderNodeList();
-    this.fileTreeEl = document.querySelector(`.${selectors.TreeNode}`);
-    // this.setupEventListeners();
   }
 
-  setupEventListeners() {
-    this.fileTreeEl!.addEventListener("click", (event) => {
-      console.log(event.target);
-    });
-  }
-
-  getNodeListHtml(list: ITreeNode[], level: number): HTMLUListElement {
-    const treeEl = document.createElement("ul");
-    treeEl.setAttribute("class", `level_${level}`);
+  getTreeDOM(list: ITreeNode[], level: number): HTMLUListElement {
+    const treeDOM = document.createElement("ul");
+    treeDOM.setAttribute("class", `level_${level}`);
     list.map((node: ITreeNode) => {
+      if (!this.showFiles && node.type === "file") {
+        return;
+      }
+
       const treeNodeEl = document.createElement("li");
       treeNodeEl.setAttribute("class", "tree-node");
 
       const nodeEl = document.createElement("div");
-
-      const nodeIconEl = document.createElement("i");
-      nodeIconEl.setAttribute("class", "tree-node__icon");
-      nodeIconEl.textContent = node.type;
-
+      const nodeIconEl = getNodeIcon(node.type, !!node?.children?.length);
       const nodeNameEl = document.createElement("span");
       nodeNameEl.setAttribute("class", "tree-node__name");
       nodeNameEl.textContent = node.name;
-
       nodeEl.appendChild(nodeIconEl);
       nodeEl.appendChild(nodeNameEl);
 
       treeNodeEl.appendChild(nodeEl);
 
+      // children
       const subTree =
-        node.children?.length && this.getNodeListHtml(node.children, level + 1);
+        node.children?.length && this.getTreeDOM(node.children, level + 1);
       subTree && treeNodeEl.appendChild(subTree);
 
+      // adding click event listener on each node
       nodeEl.addEventListener(
         "click",
-        (event) => {
+        (_event) => {
           this.handleNodeClick(node);
         },
         false
       );
 
-      treeEl.appendChild(treeNodeEl);
+      treeDOM.appendChild(treeNodeEl);
     });
-    return treeEl;
+    return treeDOM;
   }
 
   renderNodeList() {
-    const treeNode = document.createElement("div");
-    treeNode.setAttribute("class", "tree-node");
-    treeNode.appendChild(this.getNodeListHtml(this.nodeList, 0));
+    const fileTreeContainer = document.createElement("div");
+    fileTreeContainer.setAttribute("class", "file-tree");
+    fileTreeContainer.appendChild(this.getTreeDOM(this.nodeList, 0));
 
-    this.appLeftEl!.appendChild(treeNode);
+    this.appLeftEl!.appendChild(fileTreeContainer);
   }
 
   handleNodeClick(node: ITreeNode) {

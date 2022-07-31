@@ -1,0 +1,23 @@
+/* Tree Node */
+.tree-node > div {
+  display: flex;
+  align-items: center;
+}
+
+.tree-node__icon img {
+  height: 24px;
+  width: 24px;
+}
+
+.tree-node__hasChildren {
+  display: flex;
+}
+.tree-node__icon::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 24px;
+}
+.tree-node__hasChildren::before {
+  content: url("../menu-right.svg");
+}
