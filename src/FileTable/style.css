@@ -1,0 +1,10 @@
+.file-table {
+}
+
+.table__row {
+  display: flex;
+  align-items: center;
+}
+.table__col {
+  flex: 1 1 0;
+}

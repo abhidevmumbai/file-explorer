@@ -1,7 +1,10 @@
-/* Tree Node */
-.tree-node > div {
-  display: flex;
-  align-items: center;
+.file-tree ul {
+  list-style-type: none;
+}
+
+.file-tree ul {
+  padding: 0 0 0 12px;
+  list-style-type: none;
 }
 
 .tree-node__icon img {
