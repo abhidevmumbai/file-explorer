@@ -18,8 +18,18 @@ class App {
 
   async init() {
     console.log("App init...");
+    await this.fetchData();
     this.treeNode = new TreeNode();
     this.treeNode.init(this.nodeList);
+  }
+
+  async fetchData() {
+    return fetch("./public/data.json")
+      .then((res) => res.json())
+      .then((res) => {
+        this.nodeList = res.data;
+        console.log(this.nodeList);
+      });
   }
 
   setupLayout() {
