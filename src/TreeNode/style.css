@@ -1,26 +1,23 @@
 .file-tree ul {
-  list-style-type: none;
-}
-
-.file-tree ul {
   padding: 0 0 0 12px;
   list-style-type: none;
 }
 
 .tree-node__icon img {
-  height: 24px;
-  width: 24px;
+  height: 20px;
+  width: 20px;
 }
 
-.tree-node__hasChildren {
-  display: flex;
-}
 .tree-node__icon::before {
   content: "";
   display: inline-block;
-  width: 25px;
+  width: 24px;
   height: 24px;
 }
-.tree-node__hasChildren::before {
+
+.tree-node--hasChildren {
+  display: flex;
+}
+.tree-node--hasChildren::before {
   content: url("../menu-right.svg");
 }

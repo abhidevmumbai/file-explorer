@@ -9,7 +9,7 @@ export function getNodeIcon(
   const nodeIconEl = document.createElement("i");
   nodeIconEl.setAttribute(
     "class",
-    `tree-node__icon ${hasChildren && "tree-node__hasChildren"}`
+    `tree-node__icon ${hasChildren && "tree-node--hasChildren"}`
   );
   const iconEl = document.createElement("img");
   switch (type) {
