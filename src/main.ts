@@ -1,18 +1,25 @@
 import "./style.css";
 import { TreeNode } from "./TreeNode/TreeNode";
+import { ITreeNode, selectors } from "./types";
 
 class App {
+  nodeList: ITreeNode[] = [];
   appEl: HTMLElement | null;
+  appLeftEl: HTMLElement | null;
+  appRightEl: HTMLElement | null;
   treeNode: any;
 
   constructor() {
-    this.appEl = document.getElementById("app");
+    this.appEl = document.getElementById(selectors.App);
     this.setupLayout();
+    this.appLeftEl = this.appEl!.querySelector(selectors.AppLeft);
+    this.appRightEl = document.getElementById(selectors.AppRight);
   }
 
-  init() {
+  async init() {
     console.log("App init...");
     this.treeNode = new TreeNode();
+    this.treeNode.init(this.nodeList);
   }
 
   setupLayout() {
