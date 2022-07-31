@@ -1,14 +1,13 @@
 import { ITreeNode, selectors } from "../types";
 import "./style.css";
-import { getNodeIcon } from "../utils";
+import { generateNodeEl } from "../utils";
+import appState from "../state.service";
 
 export class TreeNode {
-  nodeList: ITreeNode[] = [];
   appLeftEl: HTMLElement | null;
   showFiles = false; // Flag to display files in the file tree
 
-  constructor(nodeList: ITreeNode[]) {
-    this.nodeList = nodeList;
+  constructor() {
     this.appLeftEl = document.querySelector(`.${selectors.AppLeft}`);
   }
 
@@ -28,13 +27,7 @@ export class TreeNode {
       const treeNodeEl = document.createElement("li");
       treeNodeEl.setAttribute("class", "tree-node");
 
-      const nodeEl = document.createElement("div");
-      const nodeIconEl = getNodeIcon(node.type, !!node?.children?.length);
-      const nodeNameEl = document.createElement("span");
-      nodeNameEl.setAttribute("class", "tree-node__name");
-      nodeNameEl.textContent = node.name;
-      nodeEl.appendChild(nodeIconEl);
-      nodeEl.appendChild(nodeNameEl);
+      const nodeEl = generateNodeEl(node, true);
 
       treeNodeEl.appendChild(nodeEl);
 
@@ -60,12 +53,12 @@ export class TreeNode {
   renderNodeList() {
     const fileTreeContainer = document.createElement("div");
     fileTreeContainer.setAttribute("class", "file-tree");
-    fileTreeContainer.appendChild(this.getTreeDOM(this.nodeList, 0));
+    fileTreeContainer.appendChild(this.getTreeDOM(appState.nodeList, 0));
 
     this.appLeftEl!.appendChild(fileTreeContainer);
   }
 
   handleNodeClick(node: ITreeNode) {
-    console.log(node);
+    appState.selectedNode = node;
   }
 }

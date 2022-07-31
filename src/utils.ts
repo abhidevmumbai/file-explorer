@@ -1,5 +1,6 @@
 import fileIcon from "./file.svg";
 import folderIcon from "./folder.svg";
+import { ITreeNode } from "./types";
 
 export function getNodeIcon(
   type: string,
@@ -25,4 +26,18 @@ export function getNodeIcon(
   }
   nodeIconEl.appendChild(iconEl);
   return nodeIconEl;
+}
+
+export function generateNodeEl(node: ITreeNode, hasChildren: boolean = false) {
+  const nodeEl = document.createElement("div");
+  const nodeIconEl = getNodeIcon(
+    node.type,
+    hasChildren && !!node?.children?.length
+  );
+  const nodeNameEl = document.createElement("span");
+  nodeNameEl.setAttribute("class", "tree-node__name");
+  nodeNameEl.textContent = node.name;
+  nodeEl.appendChild(nodeIconEl);
+  nodeEl.appendChild(nodeNameEl);
+  return nodeEl;
 }
