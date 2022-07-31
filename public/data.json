@@ -1,0 +1,69 @@
+{
+  "data": [
+    {
+      "type": "folder",
+      "name": "Files",
+      "modified": "Date",
+      "size": null,
+      "children": [
+        {
+          "type": "folder",
+          "name": "Documents",
+          "modified": "Date",
+          "size": null,
+          "children": [
+            {
+              "type": "file",
+              "name": "Document_1.txt",
+              "modified": "Date",
+              "size": "100 KB",
+              "children": []
+            },
+            {
+              "type": "file",
+              "name": "Document_3.txt",
+              "modified": "Date",
+              "size": "150 KB",
+              "children": []
+            },
+            {
+              "type": "file",
+              "name": "Document_3.txt",
+              "modified": "Date",
+              "size": "200 KB",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "folder",
+          "name": "Images",
+          "modified": "Date",
+          "size": null,
+          "children": []
+        },
+        {
+          "type": "folder",
+          "name": "System",
+          "modified": "Date",
+          "size": null,
+          "children": []
+        },
+        {
+          "type": "file",
+          "name": "Description.rtf",
+          "modified": "Date",
+          "size": "1 KB",
+          "children": []
+        },
+        {
+          "type": "file",
+          "name": "Description",
+          "modified": "Date",
+          "size": "2 KB",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
