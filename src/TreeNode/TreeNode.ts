@@ -3,6 +3,7 @@ import { ITreeNode, selectors } from "../types";
 export class TreeNode {
   nodeList: ITreeNode[] = [];
   appLeftEl: HTMLElement | null;
+  fileTreeEl: HTMLElement | null;
 
   constructor(nodeList: ITreeNode[]) {
     this.nodeList = nodeList;
@@ -12,30 +13,64 @@ export class TreeNode {
   init() {
     console.log("TreeNode init...");
     this.renderNodeList();
+    this.fileTreeEl = document.querySelector(`.${selectors.TreeNode}`);
+    // this.setupEventListeners();
   }
 
-  getNodeListHtml(list: ITreeNode[], level: number): string {
-    const listHtml = list.map((node: ITreeNode) => {
-      return `<ul class="level_${level}">
-              <li>
-                <div class="tree-node">
-                  <i className="tree-node__icon">${node.type}</i>
-                  <span className="tree-node__name">${node.name}</span>
-                </div>
-                ${
-                  node.children?.length
-                    ? this.getNodeListHtml(node.children, level + 1)
-                    : ""
-                }
-              </li>
-            </ul>`;
+  setupEventListeners() {
+    this.fileTreeEl!.addEventListener("click", (event) => {
+      console.log(event.target);
     });
-    return listHtml.join("");
+  }
+
+  getNodeListHtml(list: ITreeNode[], level: number): HTMLUListElement {
+    const treeEl = document.createElement("ul");
+    treeEl.setAttribute("class", `level_${level}`);
+    list.map((node: ITreeNode) => {
+      const treeNodeEl = document.createElement("li");
+      treeNodeEl.setAttribute("class", "tree-node");
+
+      const nodeEl = document.createElement("div");
+
+      const nodeIconEl = document.createElement("i");
+      nodeIconEl.setAttribute("class", "tree-node__icon");
+      nodeIconEl.textContent = node.type;
+
+      const nodeNameEl = document.createElement("span");
+      nodeNameEl.setAttribute("class", "tree-node__name");
+      nodeNameEl.textContent = node.name;
+
+      nodeEl.appendChild(nodeIconEl);
+      nodeEl.appendChild(nodeNameEl);
+
+      treeNodeEl.appendChild(nodeEl);
+
+      const subTree =
+        node.children?.length && this.getNodeListHtml(node.children, level + 1);
+      subTree && treeNodeEl.appendChild(subTree);
+
+      nodeEl.addEventListener(
+        "click",
+        (event) => {
+          this.handleNodeClick(node);
+        },
+        false
+      );
+
+      treeEl.appendChild(treeNodeEl);
+    });
+    return treeEl;
   }
 
   renderNodeList() {
-    this.appLeftEl!.innerHTML = `
-      ${this.getNodeListHtml(this.nodeList, 0)}  
-    `;
+    const treeNode = document.createElement("div");
+    treeNode.setAttribute("class", "tree-node");
+    treeNode.appendChild(this.getNodeListHtml(this.nodeList, 0));
+
+    this.appLeftEl!.appendChild(treeNode);
+  }
+
+  handleNodeClick(node: ITreeNode) {
+    console.log(node);
   }
 }

@@ -2,6 +2,6 @@ export enum selectors {
   App = "app",
   AppLeft = "app__left",
   AppRight = "app__right",
-  FileTree = "file-tree",
+  TreeNode = "tree-node",
   FileTable = "file-table",
 }
