@@ -2,3 +2,24 @@
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.app__content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app__left {
+  flex: 1;
+  border: 1px red solid;
+}
+
+.app__right {
+  flex: 2;
+  border: 1px blue solid;
+}
