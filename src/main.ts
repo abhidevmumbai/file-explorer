@@ -1,12 +1,14 @@
 import "./style.css";
 import { TreeNode } from "./TreeNode/TreeNode";
-import { ITreeNode, selectors } from "./types";
+import { selectors } from "./types";
+import appState from "./state.service";
+import { FileTable } from "./FileTable/FileTable";
 
 class App {
-  nodeList: ITreeNode[] = [];
   appEl: HTMLElement | null;
   appRightEl: HTMLElement | null;
   treeNode: any;
+  fileTable: any;
 
   constructor() {
     this.appEl = document.getElementById(selectors.App);
@@ -23,10 +25,13 @@ class App {
     return fetch("./public/data.json")
       .then((res) => res.json())
       .then((res) => {
-        this.nodeList = res.data;
-
-        this.treeNode = new TreeNode(this.nodeList);
+        appState.nodeList = res.data;
+        appState.selectedNode = res.data[0];
+        this.treeNode = new TreeNode();
         this.treeNode.init();
+
+        this.fileTable = new FileTable();
+        this.fileTable.init();
       });
   }
 
