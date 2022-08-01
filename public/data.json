@@ -16,21 +16,21 @@
               "type": "file",
               "name": "Document_1.txt",
               "modified": "7/7/2020",
-              "size": "100 KB",
+              "size": 100,
               "children": []
             },
             {
               "type": "file",
               "name": "Document_3.txt",
               "modified": "7/7/2020",
-              "size": "150 KB",
+              "size": 150,
               "children": []
             },
             {
               "type": "file",
               "name": "Document_3.txt",
               "modified": "7/7/2020",
-              "size": "200 KB",
+              "size": 200,
               "children": []
             }
           ]
@@ -53,14 +53,14 @@
           "type": "file",
           "name": "Description.rtf",
           "modified": "7/7/2020",
-          "size": "1 KB",
+          "size": 1,
           "children": []
         },
         {
           "type": "file",
           "name": "Description",
           "modified": "7/7/2020",
-          "size": "2 KB",
+          "size": 2,
           "children": []
         }
       ]

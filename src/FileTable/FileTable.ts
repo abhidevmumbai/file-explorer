@@ -39,7 +39,7 @@ export class FileTable {
 
       const fileEl = document.createElement("div");
       fileEl.setAttribute("class", "table__col");
-      fileEl.textContent = node.size + "";
+      fileEl.textContent = node.size ? `${node.size} KB` : "-";
 
       rowEl.appendChild(nameEl);
       rowEl.appendChild(dateEl);
