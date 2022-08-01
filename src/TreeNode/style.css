@@ -2,7 +2,9 @@
   padding: 0 0 0 12px;
   list-style-type: none;
 }
-
+.tree-node > div.selected {
+  background-color: #eee;
+}
 .tree-node__icon img {
   height: 20px;
   width: 20px;

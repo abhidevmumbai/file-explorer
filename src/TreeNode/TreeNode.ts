@@ -28,6 +28,7 @@ export class TreeNode {
       treeNodeEl.setAttribute("class", "tree-node");
 
       const nodeEl = generateNodeEl(node, true);
+      nodeEl.setAttribute("id", `level_${level}_${node.name}`);
 
       treeNodeEl.appendChild(nodeEl);
 
@@ -40,7 +41,7 @@ export class TreeNode {
       nodeEl.addEventListener(
         "click",
         (_event) => {
-          this.handleNodeClick(node);
+          this.handleNodeClick(node, level);
         },
         false
       );
@@ -58,7 +59,13 @@ export class TreeNode {
     this.appLeftEl!.appendChild(fileTreeContainer);
   }
 
-  handleNodeClick(node: ITreeNode) {
+  handleNodeClick(node: ITreeNode, level: number) {
     appState.selectedNode = node;
+    document
+      .querySelectorAll(".tree-node > div")
+      .forEach((el) => el.classList.remove("selected"));
+    document
+      .querySelector(`#level_${level}_${node.name}`)!
+      .classList.add("selected");
   }
 }

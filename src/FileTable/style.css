@@ -5,3 +5,8 @@
 .table__col {
   flex: 1 1 0;
 }
+
+.file-table .tree-node__icon::before {
+  content: "";
+  width: 0;
+}
