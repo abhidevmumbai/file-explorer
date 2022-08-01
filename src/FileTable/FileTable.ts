@@ -25,6 +25,8 @@ export class FileTable {
     node.children?.map((node) => {
       const rowEl = document.createElement("div");
       rowEl.setAttribute("class", "table__row");
+      rowEl.setAttribute("id", `table_${node.name}`);
+      this.addNodeClickEventListeners(rowEl, node);
 
       const nameEl = document.createElement("div");
       nameEl.setAttribute("class", "table__col tree-node");
@@ -33,7 +35,7 @@ export class FileTable {
 
       const dateEl = document.createElement("div");
       dateEl.setAttribute("class", "table__col");
-      dateEl.textContent = node.modified;
+      dateEl.textContent = node.modified.toString();
 
       const fileEl = document.createElement("div");
       fileEl.setAttribute("class", "table__col");
@@ -46,6 +48,24 @@ export class FileTable {
       tableBodyEl.appendChild(rowEl);
     });
     return tableBodyEl;
+  }
+
+  addNodeClickEventListeners(rowEl: HTMLDivElement, node: ITreeNode) {
+    // adding click event listener on each node
+    rowEl.addEventListener(
+      "dblclick",
+      (_event) => {
+        this.handleNodeDblClick(node);
+      },
+      false
+    );
+    rowEl.addEventListener(
+      "click",
+      (_event) => {
+        this.handleNodeClick(node);
+      },
+      false
+    );
   }
 
   renderNodeTable(node: ITreeNode) {
@@ -70,5 +90,18 @@ export class FileTable {
     fileTableContainer.appendChild(this.getNodeTableDOM(node));
 
     this.appRightEl!.appendChild(fileTableContainer);
+  }
+
+  handleNodeClick(node: ITreeNode) {
+    this.appRightEl!.querySelectorAll(".table__row").forEach((el) =>
+      el.classList.remove("selected")
+    );
+    this.appRightEl!.querySelector(`#table_${node.name}`)!.classList.add(
+      "selected"
+    );
+  }
+
+  handleNodeDblClick(node: ITreeNode) {
+    appState.selectedNode = node;
   }
 }

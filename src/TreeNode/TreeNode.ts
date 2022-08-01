@@ -17,6 +17,11 @@ export class TreeNode {
     appState.getNodeList().subscribe((nodeList: ITreeNode[]) => {
       this.renderNodeList(nodeList);
     });
+
+    // subscribing to selected node
+    appState.getSelectedNode().subscribe((node: ITreeNode) => {
+      this.setSelectedCSS(node);
+    });
   }
 
   getTreeDOM(list: ITreeNode[], level: number): HTMLUListElement {
@@ -31,7 +36,8 @@ export class TreeNode {
       treeNodeEl.setAttribute("class", "tree-node");
 
       const nodeEl = generateNodeEl(node, true);
-      nodeEl.setAttribute("id", `level_${level}_${node.name}`);
+      nodeEl.setAttribute("id", `tree_level_${level}_${node.name}`);
+      this.addNodeClickEventListeners(nodeEl, node, level);
 
       treeNodeEl.appendChild(nodeEl);
 
@@ -40,18 +46,24 @@ export class TreeNode {
         node.children?.length && this.getTreeDOM(node.children, level + 1);
       subTree && treeNodeEl.appendChild(subTree);
 
-      // adding click event listener on each node
-      nodeEl.addEventListener(
-        "click",
-        (_event) => {
-          this.handleNodeClick(node, level);
-        },
-        false
-      );
-
       treeDOM.appendChild(treeNodeEl);
     });
     return treeDOM;
+  }
+
+  addNodeClickEventListeners(
+    nodeEl: HTMLDivElement,
+    node: ITreeNode,
+    level: number
+  ) {
+    // adding click event listener on each node
+    nodeEl.addEventListener(
+      "click",
+      (_event) => {
+        this.handleNodeClick(node, level);
+      },
+      false
+    );
   }
 
   renderNodeList(nodeList: ITreeNode[]) {
@@ -62,13 +74,17 @@ export class TreeNode {
     this.appLeftEl!.appendChild(fileTreeContainer);
   }
 
-  handleNodeClick(node: ITreeNode, level: number) {
+  handleNodeClick(node: ITreeNode, level = 0) {
     appState.selectedNode = node;
-    document
-      .querySelectorAll(".tree-node > div")
-      .forEach((el) => el.classList.remove("selected"));
-    document
-      .querySelector(`#level_${level}_${node.name}`)!
-      .classList.add("selected");
+    this.setSelectedCSS(node, level);
+  }
+
+  setSelectedCSS(node: ITreeNode, level = 0) {
+    this.appLeftEl!.querySelectorAll(".tree-node > div").forEach((el) =>
+      el.classList.remove("selected")
+    );
+    this.appLeftEl!.querySelector(
+      `#tree_level_${level}_${node.name}`
+    )?.classList.add("selected");
   }
 }

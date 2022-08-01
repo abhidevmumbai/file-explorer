@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 4px 0 0 0;
+  padding: 0 0 4px 0;
 }
 .file-table .table__head {
   border-bottom: 1px solid #eee;
@@ -14,4 +14,7 @@
 .file-table .tree-node__icon::before {
   content: "";
   width: 0;
+}
+.file-table .table__row.selected {
+  background-color: #eee;
 }

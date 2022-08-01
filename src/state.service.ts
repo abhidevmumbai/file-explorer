@@ -21,7 +21,6 @@ export class StateService {
   set selectedNode(node: ITreeNode) {
     this.#selectedNode.next(node);
   }
-
   getSelectedNode(): Observable<ITreeNode> {
     return this.#selectedNode.asObservable();
   }
