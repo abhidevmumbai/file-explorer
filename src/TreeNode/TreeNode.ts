@@ -20,7 +20,7 @@ export class TreeNode {
 
     // subscribing to selected node
     appState.getSelectedNode().subscribe((node: ITreeNode) => {
-      this.setSelectedCSS(node);
+      this.setSelectedCSS(node, appState.selectedNodeLevel);
     });
   }
 
@@ -76,6 +76,7 @@ export class TreeNode {
 
   handleNodeClick(node: ITreeNode, level = 0) {
     appState.selectedNode = node;
+    appState.selectedNodeLevel = level;
     this.setSelectedCSS(node, level);
   }
 

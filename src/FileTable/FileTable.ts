@@ -102,6 +102,8 @@ export class FileTable {
   }
 
   handleNodeDblClick(node: ITreeNode) {
+    // Incrementing the tree level here we are going a level deep
+    appState.selectedNodeLevel = appState.selectedNodeLevel + 1;
     appState.selectedNode = node;
   }
 }

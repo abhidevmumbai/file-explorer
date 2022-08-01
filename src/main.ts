@@ -32,6 +32,7 @@ class App {
       .then((res) => {
         appState.nodeList = res.data;
         appState.selectedNode = res.data[0];
+        appState.selectedNodeLevel = 0;
       });
   }
 

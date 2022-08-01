@@ -4,6 +4,7 @@ import { Observable, of, Subject } from "rxjs";
 export class StateService {
   #nodeList = new Subject<ITreeNode[]>();
   #selectedNode = new Subject<ITreeNode>();
+  #selectedNodeLevel = 0;
 
   constructor(initialState: any) {
     const { nodeList, selectedNode } = initialState;
@@ -23,6 +24,13 @@ export class StateService {
   }
   getSelectedNode(): Observable<ITreeNode> {
     return this.#selectedNode.asObservable();
+  }
+
+  set selectedNodeLevel(level: number) {
+    this.#selectedNodeLevel = level;
+  }
+  get selectedNodeLevel(): number {
+    return this.#selectedNodeLevel;
   }
 }
 
