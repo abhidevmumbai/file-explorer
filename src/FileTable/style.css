@@ -1,8 +1,13 @@
-.table__row {
+.file-table .table__row {
   display: flex;
   align-items: center;
+  gap: 20px;
+  padding: 4px 0 0 0;
 }
-.table__col {
+.file-table .table__head {
+  border-bottom: 1px solid #eee;
+}
+.file-table .table__col {
   flex: 1 1 0;
 }
 

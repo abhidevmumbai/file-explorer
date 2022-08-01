@@ -1,6 +1,6 @@
 :root {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .app {
@@ -10,21 +10,41 @@
 }
 
 .app__content {
+  border: 1px #eee solid;
   display: flex;
   justify-content: space-between;
 }
 
 .app__left {
   flex: 1;
-  border: 1px red solid;
+  padding: 12px;
 }
 
 .app__right {
-  flex: 2;
-  border: 1px blue solid;
+  flex: 3;
+  border-left: 1px #eee solid;
+  padding: 12px;
 }
 
 .tree-node > div {
   display: flex;
   align-items: center;
+}
+
+.tree-node__icon {
+  align-items: center;
+  display: flex;
+  margin: 0 8px 0 0;
+}
+
+.tree-node__icon img {
+  height: 20px;
+  width: 20px;
+}
+
+.tree-node__icon::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
 }
