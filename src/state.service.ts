@@ -1,8 +1,9 @@
 import { ITreeNode } from "./types";
+import { Observable, of, Subject } from "rxjs";
 
 export class StateService {
-  #nodeList: ITreeNode[] = [];
-  #selectedNode: ITreeNode | undefined = undefined;
+  #nodeList = new Subject<ITreeNode[]>();
+  #selectedNode = new Subject<ITreeNode>();
 
   constructor(initialState: any) {
     const { nodeList, selectedNode } = initialState;
@@ -11,17 +12,18 @@ export class StateService {
   }
 
   set nodeList(list: ITreeNode[]) {
-    this.#nodeList = list;
+    this.#nodeList.next(list);
   }
-  get nodeList() {
-    return this.#nodeList;
+  getNodeList(): Observable<ITreeNode[]> {
+    return this.#nodeList.asObservable();
   }
 
-  set selectedNode(node: ITreeNode | undefined) {
-    this.#selectedNode = node;
+  set selectedNode(node: ITreeNode) {
+    this.#selectedNode.next(node);
   }
-  get selectedNode() {
-    return this.#selectedNode;
+
+  getSelectedNode(): Observable<ITreeNode> {
+    return this.#selectedNode.asObservable();
   }
 }
 

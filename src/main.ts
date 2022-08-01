@@ -18,6 +18,11 @@ class App {
 
   async init() {
     console.log("App init...");
+    this.treeNode = new TreeNode();
+    this.treeNode.init();
+
+    this.fileTable = new FileTable();
+    this.fileTable.init();
     await this.fetchData();
   }
 
@@ -27,11 +32,6 @@ class App {
       .then((res) => {
         appState.nodeList = res.data;
         appState.selectedNode = res.data[0];
-        this.treeNode = new TreeNode();
-        this.treeNode.init();
-
-        this.fileTable = new FileTable();
-        this.fileTable.init();
       });
   }
 

@@ -12,7 +12,10 @@ export class FileTable {
 
   init() {
     console.log("File Table init...");
-    this.renderNodeTable();
+    // subscribing to selected node
+    appState.getSelectedNode().subscribe((node: ITreeNode) => {
+      this.renderNodeTable(node);
+    });
   }
 
   getNodeTableDOM(node: ITreeNode): HTMLDivElement {
@@ -45,7 +48,8 @@ export class FileTable {
     return tableBodyEl;
   }
 
-  renderNodeTable() {
+  renderNodeTable(node: ITreeNode) {
+    this.appRightEl!.innerHTML = "";
     const fileTableContainer = document.createElement("div");
     fileTableContainer.setAttribute("class", "file-table");
 
@@ -63,11 +67,7 @@ export class FileTable {
         </div>
     `;
     fileTableContainer.innerHTML = tableHeader;
-    if (appState.selectedNode) {
-      fileTableContainer.appendChild(
-        this.getNodeTableDOM(appState.selectedNode)
-      );
-    }
+    fileTableContainer.appendChild(this.getNodeTableDOM(node));
 
     this.appRightEl!.appendChild(fileTableContainer);
   }

@@ -13,7 +13,10 @@ export class TreeNode {
 
   init() {
     console.log("TreeNode init...");
-    this.renderNodeList();
+    // subscribing to node list
+    appState.getNodeList().subscribe((nodeList: ITreeNode[]) => {
+      this.renderNodeList(nodeList);
+    });
   }
 
   getTreeDOM(list: ITreeNode[], level: number): HTMLUListElement {
@@ -51,10 +54,10 @@ export class TreeNode {
     return treeDOM;
   }
 
-  renderNodeList() {
+  renderNodeList(nodeList: ITreeNode[]) {
     const fileTreeContainer = document.createElement("div");
     fileTreeContainer.setAttribute("class", "file-tree");
-    fileTreeContainer.appendChild(this.getTreeDOM(appState.nodeList, 0));
+    fileTreeContainer.appendChild(this.getTreeDOM(nodeList, 0));
 
     this.appLeftEl!.appendChild(fileTreeContainer);
   }
