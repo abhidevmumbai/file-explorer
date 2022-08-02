@@ -1,10 +1,10 @@
-import "./style.css";
+// import "./style.css";
 import { TreeNode } from "./TreeNode/TreeNode";
 import { selectors } from "./types";
 import appState from "./state.service";
 import { FileTable } from "./FileTable/FileTable";
 
-class App {
+export default class App {
   appEl: HTMLElement | null;
   appRightEl: HTMLElement | null;
   treeNode: any;
