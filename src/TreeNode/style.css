@@ -1,12 +1,40 @@
 .file-tree ul {
   list-style-type: none;
   margin: 0;
+  padding: 0 0 0 24px;
+}
+.file-tree > ul {
   padding: 0;
 }
 .file-tree .tree-node > div.selected {
   background-color: #eee;
 }
 
-.file-tree .tree-node--hasChildren::before {
+.file-tree .tree-node__name,
+.file-tree .tree-node__name > div {
+  display: flex;
+}
+
+.file-tree .tree-node > label,
+.file-tree .tree-node > input {
+  float: left;
+}
+.file-tree .tree-node > input {
+  display: none;
+}
+.file-tree .tree-node > label::before {
   content: url("../images/menu-right.svg");
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.file-tree .tree-node input:checked + label::before {
+  transform: rotate(90deg);
+}
+.file-tree .tree-node input:checked ~ ul {
+  display: block;
+}
+.file-tree .tree-node ul {
+  display: none;
 }

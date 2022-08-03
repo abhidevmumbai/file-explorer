@@ -3,10 +3,11 @@ import { generateNodeEl } from "../utils";
 import appState from "../state.service";
 import { ITreeNode } from "./TreeNode.types";
 import { selectors } from "../main.types";
+import menuRightIcon from "../images/menu-right.svg";
 
 export class TreeNode {
   appLeftEl: HTMLElement | null;
-  showFiles = false; // Flag to display files in the file tree
+  showFiles = true; // Flag to display files in the file tree
 
   constructor() {
     this.appLeftEl = document.querySelector(`.${selectors.AppLeft}`);
@@ -33,21 +34,41 @@ export class TreeNode {
         return;
       }
 
-      const treeNodeEl = document.createElement("li");
-      treeNodeEl.setAttribute("class", "tree-node");
+      // li element
+      const treeNodeLiEl = document.createElement("li");
+      treeNodeLiEl.setAttribute("class", "tree-node");
 
+      // node name element container
+      const treeNodeEl = document.createElement("div");
+      treeNodeEl.setAttribute("class", "tree-node__name");
+      treeNodeEl.setAttribute("id", `tree_level_${level}_${node.name}`);
+
+      // node name element(file/folder icon + name)
       const nodeEl = generateNodeEl(node, true);
-      nodeEl.setAttribute("id", `tree_level_${level}_${node.name}`);
       this.addNodeClickEventListeners(nodeEl, node, level);
 
-      treeNodeEl.appendChild(nodeEl);
+      // adding expand/collapse functionality
+      if (node?.children?.length) {
+        const toggleCheckbox = document.createElement("input");
+        toggleCheckbox.setAttribute("type", "checkbox");
+        toggleCheckbox.setAttribute("id", `chk-${node.name}`);
 
-      // children
+        const label = document.createElement("label");
+        label.setAttribute("for", `chk-${node.name}`);
+
+        // Adding expand/collapse icon
+        treeNodeLiEl.appendChild(toggleCheckbox);
+        treeNodeLiEl.appendChild(label);
+      }
+      treeNodeEl.appendChild(nodeEl);
+      treeNodeLiEl.appendChild(treeNodeEl);
+
+      // node children
       const subTree =
         node.children?.length && this.getTreeDOM(node.children, level + 1);
-      subTree && treeNodeEl.appendChild(subTree);
+      subTree && treeNodeLiEl.appendChild(subTree);
 
-      treeDOM.appendChild(treeNodeEl);
+      treeDOM.appendChild(treeNodeLiEl);
     });
     return treeDOM;
   }

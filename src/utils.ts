@@ -36,7 +36,6 @@ export function generateNodeEl(node: ITreeNode, hasChildren = false) {
     hasChildren && !!node?.children?.length
   );
   const nodeNameEl = document.createElement("span");
-  nodeNameEl.setAttribute("class", "tree-node__name");
   nodeNameEl.textContent = node.name;
   nodeEl.appendChild(nodeIconEl);
   nodeEl.appendChild(nodeNameEl);
