@@ -1,6 +1,6 @@
-import fileIcon from "./file.svg";
+import fileIcon from "./images/file.svg";
 import { ITableHeadsConfig } from "./FileTable/FileTable.types";
-import folderIcon from "./folder.svg";
+import folderIcon from "./images/folder.svg";
 import { ITreeNode } from "./TreeNode/TreeNode.types";
 
 export function getIconByNodeType(

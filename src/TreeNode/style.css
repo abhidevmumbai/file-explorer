@@ -8,5 +8,5 @@
 }
 
 .file-tree .tree-node--hasChildren::before {
-  content: url("../menu-right.svg");
+  content: url("../images/menu-right.svg");
 }
