@@ -33,6 +33,7 @@ export class FileTable {
     tableBodyEl.setAttribute("class", "table__body");
 
     node.children?.map((node: ITreeNode) => {
+      node.modified = new Date(node.modified);
       const rowEl = document.createElement("div");
       rowEl.setAttribute("class", "table__row");
       rowEl.setAttribute("id", `table_${node.name}`);
@@ -45,7 +46,7 @@ export class FileTable {
 
       const dateEl = document.createElement("div");
       dateEl.setAttribute("class", "table__col");
-      dateEl.textContent = node.modified.toString();
+      dateEl.textContent = node.modified.toDateString();
 
       const fileEl = document.createElement("div");
       fileEl.setAttribute("class", "table__col");
@@ -56,6 +57,7 @@ export class FileTable {
       rowEl.appendChild(fileEl);
 
       tableBodyEl.appendChild(rowEl);
+      return node;
     });
     return tableBodyEl;
   }
