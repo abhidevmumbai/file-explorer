@@ -1,7 +1,8 @@
-import { ITreeNode, selectors } from "../types";
 import "./style.css";
 import { generateNodeEl } from "../utils";
 import appState from "../state.service";
+import { ITreeNode } from "./TreeNode.types";
+import { selectors } from "../main.types";
 
 export class TreeNode {
   appLeftEl: HTMLElement | null;

@@ -1,14 +1,14 @@
-// import "./style.css";
+import "./style.css";
 import { TreeNode } from "./TreeNode/TreeNode";
-import { selectors } from "./types";
 import appState from "./state.service";
 import { FileTable } from "./FileTable/FileTable";
+import { selectors } from "./main.types";
 
 export default class App {
   appEl: HTMLElement | null;
   appRightEl: HTMLElement | null;
-  treeNode: any;
-  fileTable: any;
+  treeNode: TreeNode | undefined;
+  fileTable: FileTable | undefined;
 
   constructor() {
     this.appEl = document.getElementById(selectors.App);
