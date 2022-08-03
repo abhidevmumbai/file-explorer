@@ -55,3 +55,15 @@ export function generateTableHeadEl(tableHeadsConfig: ITableHeadsConfig) {
   });
   return row;
 }
+
+export function sortData(data: any[], sortBy: string, sortDirection: string) {
+  return data.sort((a: any, b: any) => {
+    if (a[sortBy] < b[sortBy]) {
+      return sortDirection === "asc" ? -1 : 1;
+    }
+    if (a[sortBy] > b[sortBy]) {
+      return sortDirection === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
+}

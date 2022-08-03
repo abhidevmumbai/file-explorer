@@ -28,7 +28,7 @@
             },
             {
               "type": "file",
-              "name": "Document_3.txt",
+              "name": "Document_2.txt",
               "modified": "7/7/2022",
               "size": 200,
               "children": []
@@ -58,7 +58,7 @@
         },
         {
           "type": "file",
-          "name": "Description",
+          "name": "Description.txt",
           "modified": "8/5/2022",
           "size": 2,
           "children": []

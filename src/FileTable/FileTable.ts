@@ -1,10 +1,20 @@
-import { ITreeNode, selectors } from "../types";
 import appState from "../state.service";
-import { generateNodeEl } from "../utils";
+import { generateNodeEl, generateTableHeadEl, sortData } from "../utils";
 import "./style.css";
+import { ITableHeadsConfig } from "./FileTable.types";
+import { ITreeNode } from "../TreeNode/TreeNode.types";
+import { selectors } from "../main.types";
 
 export class FileTable {
   appRightEl: HTMLElement | null;
+  tableHeadsConfig: ITableHeadsConfig = {
+    order: ["name", "modified", "size"],
+    map: {
+      name: { name: "Name", dir: "asc" },
+      modified: { name: "Date Modified", dir: "asc" },
+      size: { name: "File Size", dir: "asc" },
+    },
+  };
 
   constructor() {
     this.appRightEl = document.querySelector(`.${selectors.AppRight}`);
@@ -22,7 +32,7 @@ export class FileTable {
     const tableBodyEl = document.createElement("div");
     tableBodyEl.setAttribute("class", "table__body");
 
-    node.children?.map((node) => {
+    node.children?.map((node: ITreeNode) => {
       const rowEl = document.createElement("div");
       rowEl.setAttribute("class", "table__row");
       rowEl.setAttribute("id", `table_${node.name}`);
@@ -68,25 +78,43 @@ export class FileTable {
     );
   }
 
+  addTableHeadSortListener(headRowEl: HTMLDivElement, node: ITreeNode) {
+    headRowEl.addEventListener(
+      "click",
+      (event: any) => {
+        this.handleSort(
+          node,
+          event.target.dataset.sortby,
+          this.tableHeadsConfig.map[event.target.dataset.sortby].dir
+        );
+        // toggle sort direction
+        this.tableHeadsConfig.map[event.target.dataset.sortby].dir =
+          this.tableHeadsConfig.map[event.target.dataset.sortby].dir === "asc"
+            ? "desc"
+            : "asc";
+        event.target.dataset.sortdirection =
+          this.tableHeadsConfig.map[event.target.dataset.sortby].dir;
+      },
+      false
+    );
+  }
+
+  handleSort(node: ITreeNode, sortBy: string, sortDirection: string) {
+    if (!node.children?.length) {
+      return;
+    }
+    node.children = sortData(node.children, sortBy, sortDirection);
+    this.renderNodeTable(node);
+  }
+
   renderNodeTable(node: ITreeNode) {
     this.appRightEl!.innerHTML = "";
     const fileTableContainer = document.createElement("div");
     fileTableContainer.setAttribute("class", "file-table");
 
-    const tableHeader = `
-        <div class="table__row table__head">
-            <div class="table__col">
-                Name
-            </div>
-            <div class="table__col">
-                Date Modified
-            </div>
-            <div class="table__col">
-                File Size
-            </div>
-        </div>
-    `;
-    fileTableContainer.innerHTML = tableHeader;
+    const tableHeader = generateTableHeadEl(this.tableHeadsConfig);
+    this.addTableHeadSortListener(tableHeader, node);
+    fileTableContainer.appendChild(tableHeader);
     fileTableContainer.appendChild(this.getNodeTableDOM(node));
 
     this.appRightEl!.appendChild(fileTableContainer);
@@ -96,7 +124,7 @@ export class FileTable {
     this.appRightEl!.querySelectorAll(".table__row").forEach((el) =>
       el.classList.remove("selected")
     );
-    this.appRightEl!.querySelector(`#table_${node.name}`)!.classList.add(
+    this.appRightEl!.querySelector(`#table_${node.name}`)?.classList.add(
       "selected"
     );
   }
